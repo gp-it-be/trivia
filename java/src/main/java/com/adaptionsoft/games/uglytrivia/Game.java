@@ -104,45 +104,58 @@ public class Game {
     }
 
     public enum Category {
-        POP,
-        SCIENCE,
-        SPORTS,
-        ROCK
+        POP("Pop"),
+        SCIENCE("Science"),
+        SPORTS("Sports"),
+        ROCK("Rock"),
+        ;
+
+        private final String name;
+
+        Category(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
     }
 
     private void askQuestion() {
-        if (currentCategory() == "Pop") {
+        if (currentCategory().equals(Category.POP)) {
             sb.append("\n");
             sb.append(popQuestions.removeFirst());
         }
-        if (currentCategory() == "Science") {
+        if (currentCategory().equals(Category.SCIENCE)) {
             sb.append("\n");
             sb.append(scienceQuestions.removeFirst());
         }
-        if (currentCategory() == "Sports") {
+        if (currentCategory().equals(Category.SPORTS)) {
             sb.append("\n");
             sb.append(sportsQuestions.removeFirst());
         }
-        if (currentCategory() == "Rock") {
+        if (currentCategory().equals(Category.ROCK)) {
             sb.append("\n");
             sb.append(rockQuestions.removeFirst());
         }
     }
 
-    private String currentCategory() {
-
+    private Category currentCategory() {
         int currentPlace = places[currentPlayer];
-        int categoryIndex = currentPlace % 4;
+        return decideCategory(currentPlace);
+    }
 
-        switch (categoryIndex) {
+    private Category decideCategory(int currentPlace) {
+        switch (currentPlace % 4) {
             case 0:
-                return "Pop";
+                return Category.POP;
             case 1:
-                return "Science";
+                return Category.SCIENCE;
             case 2:
-                return "Sports";
+                return Category.SPORTS;
             default:
-                return "Rock";
+                return Category.ROCK;
         }
     }
 
