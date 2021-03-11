@@ -123,21 +123,25 @@ public class Game {
     }
 
     private void askQuestion() {
-        if (currentCategory().equals(Category.POP)) {
-            sb.append("\n");
-            sb.append(popQuestions.removeFirst());
-        }
-        if (currentCategory().equals(Category.SCIENCE)) {
-            sb.append("\n");
-            sb.append(scienceQuestions.removeFirst());
-        }
-        if (currentCategory().equals(Category.SPORTS)) {
-            sb.append("\n");
-            sb.append(sportsQuestions.removeFirst());
-        }
-        if (currentCategory().equals(Category.ROCK)) {
-            sb.append("\n");
-            sb.append(rockQuestions.removeFirst());
+        Category currentCategory = currentCategory();
+        LinkedList<String> questions = getQuestionsForCategory(currentCategory);
+
+        String question = questions.removeFirst();
+        sb.append("\n").append(question);
+    }
+
+    private LinkedList<String> getQuestionsForCategory(Category currentCategory) {
+        switch (currentCategory) {
+            case POP:
+                return popQuestions;
+            case SCIENCE:
+                return scienceQuestions;
+            case SPORTS:
+                return sportsQuestions;
+            case ROCK:
+                return rockQuestions;
+            default:
+                throw new IllegalArgumentException("Unknown category " + currentCategory);
         }
     }
 
